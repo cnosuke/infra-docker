@@ -1,0 +1,90 @@
+version: '2'
+services:
+  logger:
+    image: fluent/fluentd
+    ports:
+      - "0.0.0.0:24224:24224"
+    volumes:
+      - ./logs/fluentd:/fluentd/log
+
+  redis:
+    image: redis
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis/:/data
+
+  ruboty-tsukuba:
+    image: cnosuke/ruboty
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+    env_file: ./envfiles/ruboty-tsukuba.env
+    links:
+      - redis:redis
+
+  ruboty-sotomuki:
+    image: cnosuke/ruboty
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+    env_file: ./envfiles/ruboty-sotomuki.env
+    links:
+      - redis:redis
+
+  rproxy:
+    image: nginx
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+    ports:
+      - "0.0.0.0:80:80"
+    volumes:
+      - ./conf/nginx/conf.d:/etc/nginx/conf.d
+      - ./data/nginx/socks:/tmp/socks
+
+  lgtm:
+    image: cnosuke/lgtm
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+    env_file: ./envfiles/lgtm.env
+    volumes:
+      - ./data/nginx/socks:/tmp/socks
+
+  cnzo:
+    image: cnosuke/cnzo
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+    env_file: ./envfiles/cnzo.env
+    volumes:
+      - ./data/nginx/socks:/tmp/socks
+
+  ame:
+    image: cnosuke/tokyo_amage
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+    env_file: ./envfiles/ame.env
+    volumes:
+      - ./data/nginx/socks:/tmp/socks
+
+#db-misc:
+#  image: mariadb
+#  env_file: ./envfiles/db-misc.env
+#  ports:
+#    - "13306:3306"
+#  volumes:
+#    - ./data/db:/var/lib/mysql
+#    - ./conf/mysql/conf.d:/etc/mysql/conf.d
