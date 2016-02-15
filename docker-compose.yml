@@ -3,7 +3,7 @@ services:
   logger:
     image: fluent/fluentd
     ports:
-      - "0.0.0.0:24224:24224"
+      - "24224:24224"
     volumes:
       - ./logs/fluentd:/fluentd/log
 
