@@ -58,6 +58,8 @@ services:
     volumes:
       - ./conf/nginx/conf.d:/etc/nginx/conf.d
       - ./data/nginx/socks:/tmp/socks
+    links:
+      - rundeck
 
   lgtm:
     image: cnosuke/lgtm
@@ -88,3 +90,13 @@ services:
     env_file: ./envfiles/ame.env
     volumes:
       - ./data/nginx/socks:/tmp/socks
+
+  rundeck:
+    image: cnosuke/rundeck
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+    env_file: ./envfiles/rundeck.env
+    links:
+      - db-misc
