@@ -98,5 +98,7 @@ services:
       options:
         fluentd-address: localhost:24224
     env_file: ./envfiles/rundeck.env
+    volumes:
+      - ./conf/rundeck/realm:/etc/rundeck/realm
     links:
       - db-misc
