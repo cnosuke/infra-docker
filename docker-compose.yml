@@ -21,11 +21,11 @@ services:
   db-misc:
    image: mariadb
    env_file: ./envfiles/db-misc.env
-   ports:
-     - "13306:3306"
    volumes:
      - ./data/db-misc:/var/lib/mysql
      - ./conf/mysql/conf.d:/etc/mysql/conf.d
+#   ports:
+#     - "13306:3306"
 
   ruboty-tsukuba:
     image: cnosuke/ruboty
