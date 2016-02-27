@@ -18,6 +18,15 @@ services:
     volumes:
       - ./data/redis/:/data
 
+  db-misc:
+   image: mariadb
+   env_file: ./envfiles/db-misc.env
+   ports:
+     - "13306:3306"
+   volumes:
+     - ./data/db-misc:/var/lib/mysql
+     - ./conf/mysql/conf.d:/etc/mysql/conf.d
+
   ruboty-tsukuba:
     image: cnosuke/ruboty
     logging:
@@ -79,12 +88,3 @@ services:
     env_file: ./envfiles/ame.env
     volumes:
       - ./data/nginx/socks:/tmp/socks
-
-#db-misc:
-#  image: mariadb
-#  env_file: ./envfiles/db-misc.env
-#  ports:
-#    - "13306:3306"
-#  volumes:
-#    - ./data/db:/var/lib/mysql
-#    - ./conf/mysql/conf.d:/etc/mysql/conf.d
