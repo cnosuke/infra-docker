@@ -102,3 +102,15 @@ services:
       - ./conf/rundeck/realm:/etc/rundeck/realm
     links:
       - db-misc
+
+  funho:
+    image: cnosuke/funho
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+    env_file: ./envfiles/funho.env
+    volumes:
+      - ./data/nginx/socks:/tmp/socks
+    links:
+      - db-misc
