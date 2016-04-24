@@ -123,5 +123,4 @@ services:
         fluentd-address: localhost:24224
     volumes:
       - ./conf/softether/vpn_server.config:/usr/local/vpnserver/vpn_server.config
-    net:
-      - host
+    network_mode: host
