@@ -61,6 +61,7 @@ services:
     links:
       - rundeck
       - ame
+      - funho
 
   lgtm:
     image: cnosuke/lgtm
