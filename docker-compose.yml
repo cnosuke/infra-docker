@@ -117,15 +117,15 @@ services:
     links:
       - db-misc
 
-  vpn:
-    image: cnosuke/softether
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: localhost:24224
-    volumes:
-      - ./conf/softether/vpn_server.config:/usr/local/vpnserver/vpn_server.config
-    network_mode: host
+  # vpn:
+  #   image: cnosuke/softether
+  #   logging:
+  #     driver: fluentd
+  #     options:
+  #       fluentd-address: localhost:24224
+  #   volumes:
+  #     - ./conf/softether/vpn_server.config:/usr/local/vpnserver/vpn_server.config
+  #   network_mode: host
 
   # drone:
   #   image: drone/drone:0.4
