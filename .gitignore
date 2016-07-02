@@ -3,3 +3,4 @@ logs/*
 data/*
 envfiles/*.env
 conf/softether/vpn_server.config
+certs/*
