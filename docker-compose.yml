@@ -61,10 +61,10 @@ services:
       - ./data/nginx/socks:/tmp/socks
       - ./certs:/certs
     links:
-      - rundeck
       - ame
       - funho
-      - drone
+      # - rundeck
+      # - drone
 
   lgtm:
     image: cnosuke/lgtm
@@ -93,17 +93,17 @@ services:
       options:
         fluentd-address: localhost:24224
 
-  rundeck:
-    image: cnosuke/rundeck
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: localhost:24224
-    env_file: ./envfiles/rundeck.env
-    volumes:
-      - ./conf/rundeck/realm:/etc/rundeck/realm
-    links:
-      - db-misc
+  # rundeck:
+  #   image: cnosuke/rundeck
+  #   logging:
+  #     driver: fluentd
+  #     options:
+  #       fluentd-address: localhost:24224
+  #   env_file: ./envfiles/rundeck.env
+  #   volumes:
+  #     - ./conf/rundeck/realm:/etc/rundeck/realm
+  #   links:
+  #     - db-misc
 
   funho:
     image: cnosuke/funho
@@ -127,13 +127,13 @@ services:
       - ./conf/softether/vpn_server.config:/usr/local/vpnserver/vpn_server.config
     network_mode: host
 
-  drone:
-    image: drone/drone:0.4
-    logging:
-      driver: fluentd
-      options:
-        fluentd-address: localhost:24224
-    volumes:
-      - ./data/drone:/var/lib/drone
-      - /var/run/docker.sock:/var/run/docker.sock
-    env_file: ./envfiles/drone.env
+  # drone:
+  #   image: drone/drone:0.4
+  #   logging:
+  #     driver: fluentd
+  #     options:
+  #       fluentd-address: localhost:24224
+  #   volumes:
+  #     - ./data/drone:/var/lib/drone
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   env_file: ./envfiles/drone.env
