@@ -63,6 +63,7 @@ services:
     links:
       - ame
       - funho
+      - rsshproxy
       # - rundeck
       # - drone
 
@@ -116,6 +117,18 @@ services:
       - ./data/nginx/socks:/tmp/socks
     links:
       - db-misc
+
+  rsshproxy:
+    image: cnosuke/rsshproxy
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+    environment:
+      - GITHUB_USER=cnosuke
+    ports:
+      - "0.0.0.0:2244:22"
+
 
   # vpn:
   #   image: cnosuke/softether
