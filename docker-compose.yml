@@ -64,6 +64,8 @@ services:
       - ame
       - funho
       - rsshproxy
+      - rsshproxy-jtakahashi0604
+      - rsshproxy-inohiro
       # - rundeck
       # - drone
 
@@ -129,7 +131,27 @@ services:
     ports:
       - "0.0.0.0:2244:22"
 
+  rsshproxy-jtakahashi0604:
+    image: cnosuke/rsshproxy
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+    environment:
+      - GITHUB_USER=jtakahashi0604
+    ports:
+      - "0.0.0.0:2245:22"
 
+  rsshproxy-inohiro:
+    image: cnosuke/rsshproxy
+    logging:
+      driver: fluentd
+      options:
+        fluentd-address: localhost:24224
+    environment:
+      - GITHUB_USER=inohiro
+    ports:
+      - "0.0.0.0:2246:22"
   # vpn:
   #   image: cnosuke/softether
   #   logging:
